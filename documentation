@@ -1,0 +1,17 @@
+28. mai 
+commit: beide player sind voneinander getrennt etc.
+was jetzt ist:
+  player 1 und player 2 haben unterschiedliche movementscripts.
+  man kann sich nicht bewegen während man moves ausführt.
+  directorys bilden perfekte vorlage für das kombosystem (stance system)
+  mögliche inputs wurden gut umgesetzt.
+
+geplant:
+  jeder charakter hat eine player 1 und player 2 scene, die ggf. gespiegelt ist, andere farbe hat etc. dann kann man die scriptfiles gut einsetzen
+  und es ist direkt implementiert dass beide spieler den selben charakter auswählen. hit detection wird gemacht so: bei einer animation wird funktion 
+  gecallt mit einem integer als schadenswert + einem signal von area2d body_entered zsm arbeitet um beim gegner lebenspunkte abzuziehen.
+  Rundensystem muss erstellt werden match sind iterierende runden + statisches score (gewonnenen runden). runde ist reset der charaktere, lebenspunkte etc
+  charakterselektion + mapselektion
+  
+  später: 
+    originale sprites und maps, stance system, balancing, polishing
