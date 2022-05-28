@@ -1,0 +1,89 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://src/Assets/Visual/Sprites/Punch_2.png" type="Texture" id=1]
+[ext_resource path="res://src/Scenes/Characters/PlayerOld/PlayerMovement.gd" type="Script" id=2]
+[ext_resource path="res://src/Assets/Visual/Sprites/Low_Kick_1.png" type="Texture" id=3]
+[ext_resource path="res://src/Assets/Visual/Sprites/Punch_1.png" type="Texture" id=4]
+[ext_resource path="res://src/Assets/Visual/Sprites/Idle.png" type="Texture" id=5]
+[ext_resource path="res://src/Scenes/Characters/PlayerOld/ColliderScript.gd" type="Script" id=6]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 21, 45.5 )
+
+[sub_resource type="SpriteFrames" id=2]
+animations = [ {
+"frames": [ ExtResource( 5 ), ExtResource( 5 ) ],
+"loop": true,
+"name": "Idle",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 3 ), ExtResource( 3 ) ],
+"loop": false,
+"name": "Low Kick",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 4 ), ExtResource( 4 ) ],
+"loop": false,
+"name": "Straight Punch",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 1 ), ExtResource( 1 ) ],
+"loop": false,
+"name": "Upper Cut",
+"speed": 5.0
+} ]
+
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 10, 9.5 )
+
+[node name="Player" type="KinematicBody2D"]
+script = ExtResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 0, 2.5 )
+shape = SubResource( 1 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+z_index = -1
+frames = SubResource( 2 )
+animation = "Idle"
+
+[node name="Colliders" type="Node2D" parent="."]
+script = ExtResource( 6 )
+
+[node name="HandC" type="Node2D" parent="Colliders"]
+
+[node name="LeftHC" type="Area2D" parent="Colliders/HandC"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Colliders/HandC/LeftHC" groups=["colliders"]]
+modulate = Color( 0.541176, 0.670588, 0.0705882, 1 )
+position = Vector2( 32, -24.5 )
+shape = SubResource( 3 )
+
+[node name="RightHC" type="Area2D" parent="Colliders/HandC"]
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Colliders/HandC/RightHC" groups=["colliders"]]
+modulate = Color( 0.721569, 0.737255, 0.180392, 1 )
+position = Vector2( -10, -27 )
+shape = SubResource( 3 )
+
+[node name="FootC" type="Node2D" parent="Colliders"]
+
+[node name="LeftFC" type="Area2D" parent="Colliders/FootC"]
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="Colliders/FootC/LeftFC" groups=["colliders"]]
+modulate = Color( 0.721569, 0.737255, 0.180392, 1 )
+position = Vector2( -25, 42 )
+shape = SubResource( 3 )
+
+[node name="RightFC" type="Area2D" parent="Colliders/FootC"]
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="Colliders/FootC/RightFC" groups=["colliders"]]
+modulate = Color( 0.721569, 0.737255, 0.180392, 1 )
+position = Vector2( 20, 41 )
+shape = SubResource( 3 )
+
+[connection signal="body_entered" from="Colliders/HandC/LeftHC" to="Colliders" method="_on_LeftHC_body_entered"]
+[connection signal="body_entered" from="Colliders/HandC/RightHC" to="Colliders" method="_on_RightHC_body_entered"]
+[connection signal="body_entered" from="Colliders/FootC/LeftFC" to="Colliders" method="_on_LeftFC_body_entered"]
+[connection signal="body_entered" from="Colliders/FootC/RightFC" to="Colliders" method="_on_RightFC_body_entered"]
