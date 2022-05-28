@@ -1,7 +1,13 @@
 28. mai 
 commit: beide player sind voneinander getrennt etc.
 was jetzt ist:
-  player 1 und player 2 haben unterschiedliche movementscripts.
+  zwei unterschiedliche Charaktere 
+  player 1 und player 2 haben unterschiedliche movementscripts (tastenkontrollen).
+  skalierbarer animationsbaum
+  sie können sich bewegen, angriffe ausführen, sich ducken, spezialangriffe
+  ein kombosystem erlaubt verschiedene angriffe mit verschiedenen tastenkombinationen
+  angriffe haben ihre eigene interaktive hitboxen.
+  
   man kann sich nicht bewegen während man moves ausführt.
   directorys bilden perfekte vorlage für das kombosystem (stance system)
   mögliche inputs wurden gut umgesetzt.
