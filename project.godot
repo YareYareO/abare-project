@@ -39,7 +39,7 @@ _global_script_class_icons={
 [application]
 
 config/name="abare"
-run/main_scene="res://src/Scenes/Game/Game.tscn"
+run/main_scene="res://src/Scenes/Game/SelectionScreen.tscn"
 config/icon="res://icon.png"
 
 [autoload]
@@ -49,6 +49,7 @@ IconLoaderGithub="*res://addons/github-integration/scripts/IconLoaderGithub.gd"
 UserData="*res://addons/github-integration/scripts/user_data.gd"
 RestHandler="*res://addons/github-integration/scenes/RestHandler.tscn"
 MoveSetManager="*res://src/Assets/Scripts/MoveSetManager.gd"
+CharacterSelectionManager="*res://src/Assets/Scripts/CharacterSelectionManager.gd"
 
 [debug]
 

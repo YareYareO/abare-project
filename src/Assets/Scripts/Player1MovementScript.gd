@@ -40,6 +40,7 @@ func _input(event):
 	
 func _process(delta):
 	if(P1canMove):
+		
 		if(Input.is_action_pressed("p1_move_left")):
 			_move_player(-1)
 		elif(Input.is_action_pressed("p1_move_right")):
