@@ -1,7 +1,6 @@
-[gd_scene load_steps=26 format=2]
+[gd_scene load_steps=29 format=2]
 
 [ext_resource path="res://src/Assets/Visual/Sprites/Ryu/Ryu - Smaller SpriteSheet.png" type="Texture" id=1]
-[ext_resource path="res://src/Assets/Scripts/Player1MovementScript.gd" type="Script" id=2]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 9, 9.75 )
@@ -59,7 +58,7 @@ tracks/3/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( -44, 30.5 ) ]
+"values": [ Vector2( 0, 30.5 ) ]
 }
 tracks/4/type = "method"
 tracks/4/path = NodePath(".")
@@ -113,7 +112,7 @@ tracks/2/keys = {
 "times": PoolRealArray( 0, 0.4 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ Vector2( -44, 30.5 ), Vector2( -44, 30.5 ) ]
+"values": [ Vector2( 0, 30.5 ), Vector2( 0, 30.5 ) ]
 }
 tracks/3/type = "value"
 tracks/3/path = NodePath("Area2D/Hit Collider:disabled")
@@ -149,7 +148,7 @@ tracks/5/keys = {
 "times": PoolRealArray( 0, 0.4 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ Vector2( 10, 14 ), Vector2( 10, 14 ) ]
+"values": [ Vector2( 55, 14 ), Vector2( 55, 14 ) ]
 }
 tracks/6/type = "method"
 tracks/6/path = NodePath(".")
@@ -167,6 +166,46 @@ tracks/6/keys = {
 "args": [ false ],
 "method": "_allowed_to_move"
 } ]
+}
+
+[sub_resource type="Animation" id=24]
+resource_name = "Dash"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 11, 12, 13, 14 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Body Collider:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, 16 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Area2D/Hit Collider:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
 }
 
 [sub_resource type="Animation" id=7]
@@ -206,7 +245,7 @@ tracks/2/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( -45, 16 ) ]
+"values": [ Vector2( 0, 16 ) ]
 }
 tracks/3/type = "value"
 tracks/3/path = NodePath("Area2D/Hit Collider:shape:extents")
@@ -300,7 +339,7 @@ tracks/2/keys = {
 "times": PoolRealArray( 0, 0.4 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ Vector2( -45, 16 ), Vector2( -45, 16 ) ]
+"values": [ Vector2( 0, 16 ), Vector2( 0, 16 ) ]
 }
 tracks/3/type = "value"
 tracks/3/path = NodePath("Area2D/Hit Collider:shape:extents")
@@ -336,7 +375,7 @@ tracks/5/keys = {
 "times": PoolRealArray( 0, 0.4 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ Vector2( 13, -13.75 ), Vector2( 13, -13 ) ]
+"values": [ Vector2( 58, -13.75 ), Vector2( 58, -13 ) ]
 }
 tracks/6/type = "method"
 tracks/6/path = NodePath(".")
@@ -474,10 +513,10 @@ tracks/3/loop_wrap = true
 tracks/3/imported = false
 tracks/3/enabled = true
 tracks/3/keys = {
-"times": PoolRealArray( 0.1, 0.2 ),
-"transitions": PoolRealArray( 1, 1 ),
+"times": PoolRealArray( 0.1, 0.2, 0.206779 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
 "update": 0,
-"values": [ Vector2( -7.75, -10.5 ), Vector2( -38.5, -54 ) ]
+"values": [ Vector2( 37.25, -10.5 ), Vector2( -38.5, -54 ), Vector2( 5, -54 ) ]
 }
 tracks/4/type = "value"
 tracks/4/path = NodePath("Body Collider:shape:extents")
@@ -501,7 +540,7 @@ tracks/5/keys = {
 "times": PoolRealArray( 0, 0.1, 0.2, 0.5, 0.7 ),
 "transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
 "update": 0,
-"values": [ Vector2( -44, 24.5 ), Vector2( -44, 20 ), Vector2( -47.5, 13 ), Vector2( -47.5, 17 ), Vector2( -47.5, 19 ) ]
+"values": [ Vector2( 0, 24.5 ), Vector2( 0, 20 ), Vector2( -2, 13 ), Vector2( -2, 17 ), Vector2( -2, 19 ) ]
 }
 tracks/6/type = "method"
 tracks/6/path = NodePath(".")
@@ -523,6 +562,9 @@ animation = "Crouch Idle"
 
 [sub_resource type="AnimationNodeAnimation" id=10]
 animation = "Crouch Jab"
+
+[sub_resource type="AnimationNodeAnimation" id=25]
+animation = "Dash"
 
 [sub_resource type="AnimationNodeAnimation" id=11]
 animation = "Idle"
@@ -556,25 +598,33 @@ switch_mode = 2
 switch_mode = 2
 auto_advance = true
 
+[sub_resource type="AnimationNodeStateMachineTransition" id=26]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=27]
+switch_mode = 2
+auto_advance = true
+
 [sub_resource type="AnimationNodeStateMachine" id=22]
 "states/Crouch Idle/node" = SubResource( 9 )
 "states/Crouch Idle/position" = Vector2( 444, 190 )
 "states/Crouch Jab/node" = SubResource( 10 )
 "states/Crouch Jab/position" = Vector2( 636, 182 )
+states/Dash/node = SubResource( 25 )
+states/Dash/position = Vector2( 505, -10 )
 states/Idle/node = SubResource( 11 )
 states/Idle/position = Vector2( 462, 83 )
 states/Jab/node = SubResource( 12 )
 states/Jab/position = Vector2( 633, 98 )
 states/Shoryuken/node = SubResource( 13 )
 states/Shoryuken/position = Vector2( 235, 90 )
-transitions = [ "Idle", "Jab", SubResource( 14 ), "Jab", "Idle", SubResource( 15 ), "Crouch Idle", "Crouch Jab", SubResource( 16 ), "Crouch Jab", "Crouch Idle", SubResource( 17 ), "Crouch Idle", "Idle", SubResource( 18 ), "Idle", "Crouch Idle", SubResource( 19 ), "Idle", "Shoryuken", SubResource( 20 ), "Shoryuken", "Idle", SubResource( 21 ) ]
+transitions = [ "Idle", "Jab", SubResource( 14 ), "Jab", "Idle", SubResource( 15 ), "Crouch Idle", "Crouch Jab", SubResource( 16 ), "Crouch Jab", "Crouch Idle", SubResource( 17 ), "Crouch Idle", "Idle", SubResource( 18 ), "Idle", "Crouch Idle", SubResource( 19 ), "Idle", "Shoryuken", SubResource( 20 ), "Shoryuken", "Idle", SubResource( 21 ), "Idle", "Dash", SubResource( 26 ), "Dash", "Idle", SubResource( 27 ) ]
 start_node = "Idle"
+graph_offset = Vector2( -8, -71 )
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=23]
 
 [node name="Ryu" type="KinematicBody2D"]
-position = Vector2( 45, 0 )
-script = ExtResource( 2 )
+collision/safe_margin = 0.001
 
 [node name="Area2D" type="Area2D" parent="."]
 
@@ -588,6 +638,7 @@ position = Vector2( -45, 16 )
 shape = SubResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 45, 0 )
 texture = ExtResource( 1 )
 hframes = 10
 vframes = 4
@@ -596,6 +647,7 @@ frame = 20
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 "anims/Crouch Idle" = SubResource( 5 )
 "anims/Crouch Jab" = SubResource( 6 )
+anims/Dash = SubResource( 24 )
 anims/Idle = SubResource( 7 )
 anims/Jab = SubResource( 3 )
 anims/RESET = SubResource( 4 )

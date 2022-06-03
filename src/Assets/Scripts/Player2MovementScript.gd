@@ -2,7 +2,7 @@ extends KinematicBody2D
 
 
 #Floats
-var P2timeTillNextInput = 0.2
+var P2timeTillNextInput = 0.18
 var P2time = P2timeTillNextInput
 
 #Booleans
@@ -12,19 +12,19 @@ var P2isCrouching = false
 
 #Integers
 var P2movementSpeed = 100
-export (int) var offsetTillFlip = 20 # wwwwwwwwwwwwwwwwwwwwwwwwwwww
 
-var moveDir # dfafaqwfawfawfwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+var P2moveDir 
 
 #Arrays
-var P2usedKeys = []
+var P2usedMovement = []
+var P2usedAttack = []
 
 #Vectors
 
 #Objects
 onready var P2playerAnimTree = $AnimationTree.get("parameters/playback")
-onready var gameRef = get_parent()
-onready var player1 =  get_parent().get_node(gameRef.givenPlayer1.name)#wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+onready var P2gameRef = get_parent()
+onready var player1 =  get_parent().get_node(P2gameRef.givenPlayer1.name)
 
 #References
 var P2generalMoveSetAnims = MoveSetManager.nameDictionary["General"]
@@ -37,10 +37,33 @@ func _input(event):
 		if event.pressed and not event.echo:
 			var character = OS.get_scancode_string(event.scancode)
 			
-			if "JKILP".find(character) >= 0:
+			if "JKIL".find(character) >= 0:
 				P2wasInputMade = true
 				P2time = P2timeTillNextInput
-				P2usedKeys.append(character)
+				P2usedMovement.append(_appendrightchar(character))
+			elif "P".find(character) >= 0:
+				P2wasInputMade = true
+				P2time = P2timeTillNextInput
+				P2usedAttack.append(_appendrightchar(character))
+				
+func _appendrightchar(character):
+	if(P2moveDir == 1 || P2moveDir == 0):
+		if(character == "L"):
+			return "forward"
+		if(character == "J"):
+			return "backward"
+	if(P2moveDir == -1):
+		if(character == "L"):
+			return "backward"
+		if(character == "J"):
+			return "forward"
+	if(character == "P"):
+		return "punch"
+	if(character == "K"):
+		return "down"
+	if(character == "I"):
+		return "up"
+		
 	
 func _process(delta):
 	
@@ -55,37 +78,51 @@ func _process(delta):
 	
 	if(P2wasInputMade):
 		P2time -= delta
-		if(P2time < 0 && P2usedKeys !=null):
-			_send_combo_attempt(P2usedKeys)
+		if(P2time < 0 || P2usedMovement.size() == 4 || P2usedAttack.size() == 4):
+			print(P2usedAttack)
+			print("hfdwuiaqhfaiu")
+			_send_combo_attempt(P2usedMovement.slice(P2usedMovement.size()-3, P2usedMovement.size()-1), P2usedAttack.slice(P2usedAttack.size()-3, P2usedAttack.size()-1)) 
+			
 			P2wasInputMade = false
 			P2time = P2timeTillNextInput
-			P2usedKeys.clear()
+			P2usedMovement.clear()
+			P2usedAttack.clear()
 			return
 	
 	if(Input.is_action_pressed("p2_crouch")):
 		P2playerAnimTree.travel(P2generalMoveSetAnims[2])
 		P2isCrouching = true
-		
 		return
 	else:
 		P2playerAnimTree.travel(P2generalMoveSetAnims[1])
 		P2isCrouching = false
 		return
 	
-func _send_combo_attempt(var attempt = []):
-	if(attempt.size() == 1 && !attempt.has("K") && attempt.has("P") || P2isCrouching == true && attempt.has("P")): # wenn er auch wirklich schlägt
-		if(P2isCrouching):
-			P2playerAnimTree.travel(P2generalMoveSetAnims[4])
-		else:
-			P2playerAnimTree.travel(P2generalMoveSetAnims[3])
+func _send_combo_attempt(var moveattempt = [], var attackattempt = []):
+	var fullattempt = moveattempt + attackattempt
+	if(fullattempt in P2specificMoveSetAnims[name]):
+		P2playerAnimTree.travel(P2specificMoveSetAnims[name][fullattempt])
+		
+	elif(attackattempt in P2specificMoveSetAnims[name] && moveattempt.size() <= 1):
+		P2playerAnimTree.travel(P2specificMoveSetAnims[name][attackattempt])
 	
-	if(attempt.size() > 1):
-		if(attempt in P2specificMoveSetAnims[name]):
-			P2playerAnimTree.travel(P2specificMoveSetAnims[name][attempt])
+	elif(moveattempt in P2specificMoveSetAnims[name]):
+		P2playerAnimTree.travel(P2specificMoveSetAnims[name][moveattempt])
+			
+	elif(attackattempt in P2generalMoveSetAnims && P2isCrouching):
+		var temp = ["down", attackattempt[0]]
+		P2playerAnimTree.travel(P2generalMoveSetAnims[temp])
+		
+	elif(attackattempt in P2generalMoveSetAnims):
+		P2playerAnimTree.travel(P2generalMoveSetAnims[attackattempt[0]])
+		
+	print(moveattempt)
+	print(attackattempt)
+	print(fullattempt)
 	
-	#print(attempt)
 	
 func _move_player(var moveDir):
+	
 	var velocity = Vector2()
 	velocity.x += moveDir * P2movementSpeed
 	velocity = move_and_slide(velocity)
@@ -96,14 +133,14 @@ func _allowed_to_move(var input):
 func _face_player():
 	var distanceToPlayer1 = player1.position.x - position.x
 	
-	if(distanceToPlayer1 > offsetTillFlip):
-		moveDir = 1
-		scale.x = scale.y * moveDir
-	elif(distanceToPlayer1 < -offsetTillFlip):
-		moveDir = -1
-		scale.x = scale.y * moveDir 
+	if(distanceToPlayer1 > 0):
+		P2moveDir = 1
+		scale.x = scale.y * P2moveDir
+	elif(distanceToPlayer1 < 0):
+		P2moveDir = -1
+		scale.x = scale.y * P2moveDir 
 	else:
-		moveDir = 0		
+		P2moveDir = 0		
 	
 	
 	
