@@ -24,12 +24,11 @@ var P1usedAttack = []
 #Objects
 onready var P1playerAnimTree = $AnimationTree.get("parameters/playback")
 onready var P1gameRef = get_parent()
-onready var player2 = get_parent().get_node(P1gameRef.givenPlayer2.name)
+onready var player2 
 
 #References
 var P1generalMoveSetAnims = MoveSetManager.nameDictionary["General"]
 var P1specificMoveSetAnims = MoveSetManager.nameDictionary
-	
 	
 	
 func _input(event):
@@ -68,8 +67,7 @@ func _appendrightchar(character):
 func _process(delta):
 	
 	if(P1canMove):
-		#_face_player()
-		if(Input.is_action_pressed("p1_move_left")): #
+		if(Input.is_action_pressed("p1_move_left")): 
 			_move_player(-1)
 		elif(Input.is_action_pressed("p1_move_right")):
 			_move_player(1)
@@ -114,13 +112,13 @@ func _send_combo_attempt(var moveattempt = [], var attackattempt = []):
 	elif(attackattempt in P1generalMoveSetAnims):
 		P1playerAnimTree.travel(P1generalMoveSetAnims[attackattempt[0]])
 		
-	print(moveattempt)
-	print(attackattempt)
-	print(fullattempt)
+	#print(moveattempt)
+	#print(attackattempt)
+	#print(fullattempt)
 	
 	
 func _move_player(var moveDir):
-	
+	_face_player()
 	var velocity = Vector2()
 	velocity.x += moveDir * P1movementSpeed
 	velocity = move_and_slide(velocity)
@@ -128,10 +126,10 @@ func _move_player(var moveDir):
 func _allowed_to_move(var input):
 	P1canMove = input
 	
-"""func _face_player():
-	print(player2)
+func _face_player():
+	if(player2 == null):
+		player2 = P1gameRef.get_node(P1gameRef.givenPlayer2.name)
 	var distanceToPlayer2 = player2.position.x - position.x
-	
 	if(distanceToPlayer2 > 0):
 		P1moveDir = 1
 		scale.x = scale.y * P1moveDir
@@ -140,7 +138,30 @@ func _allowed_to_move(var input):
 		scale.x = scale.y * P1moveDir 
 	else:
 		P1moveDir = 0		
-"""
+
+var damage = 10
+var kind_of_hit = 1
+var kind_of_block #vielleicht
+
+func _set_attack(dmg, koh):
+	damage = dmg
+	kind_of_hit = koh
 	
+func _hurt_other_player():
+	player2._get_hurt()
+	
+func _get_hurt():
+	if(_is_blocking()):
+		pass
+	else: 
+		P1gameRef.HUDManager._reduce_health_from(true, damage)
+
+func _is_blocking():
+	if((P1moveDir == 1 and Input.is_action_pressed("p1_move_left") or 
+		P1moveDir == -1 and Input.is_action_pressed("p1_move_right")) and 
+		P1canMove):
+			return true
+	else: 
+		return false
 	
 	

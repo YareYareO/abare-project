@@ -1,6 +1,7 @@
-[gd_scene load_steps=29 format=2]
+[gd_scene load_steps=30 format=2]
 
 [ext_resource path="res://src/Assets/Visual/Sprites/Ryu/Ryu - Smaller SpriteSheet.png" type="Texture" id=1]
+[ext_resource path="res://src/Assets/Scripts/HitDetection.gd" type="Script" id=2]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 9, 9.75 )
@@ -619,7 +620,7 @@ states/Shoryuken/node = SubResource( 13 )
 states/Shoryuken/position = Vector2( 235, 90 )
 transitions = [ "Idle", "Jab", SubResource( 14 ), "Jab", "Idle", SubResource( 15 ), "Crouch Idle", "Crouch Jab", SubResource( 16 ), "Crouch Jab", "Crouch Idle", SubResource( 17 ), "Crouch Idle", "Idle", SubResource( 18 ), "Idle", "Crouch Idle", SubResource( 19 ), "Idle", "Shoryuken", SubResource( 20 ), "Shoryuken", "Idle", SubResource( 21 ), "Idle", "Dash", SubResource( 26 ), "Dash", "Idle", SubResource( 27 ) ]
 start_node = "Idle"
-graph_offset = Vector2( -8, -71 )
+graph_offset = Vector2( 333, -71 )
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=23]
 
@@ -627,6 +628,7 @@ graph_offset = Vector2( -8, -71 )
 collision/safe_margin = 0.001
 
 [node name="Area2D" type="Area2D" parent="."]
+script = ExtResource( 2 )
 
 [node name="Hit Collider" type="CollisionShape2D" parent="Area2D"]
 position = Vector2( 13, -13.75 )
@@ -658,3 +660,6 @@ tree_root = SubResource( 22 )
 anim_player = NodePath("../AnimationPlayer")
 active = true
 parameters/playback = SubResource( 23 )
+
+[connection signal="body_entered" from="Area2D" to="Area2D" method="_on_Area2D_body_entered"]
+[connection signal="body_entered" from="Area2D" to="Area2D" method="_on_body_entered"]

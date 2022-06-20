@@ -13,7 +13,7 @@ var P2isCrouching = false
 #Integers
 var P2movementSpeed = 100
 
-var P2moveDir 
+var P2moveDir = -1
 
 #Arrays
 var P2usedMovement = []
@@ -41,6 +41,7 @@ func _input(event):
 				P2wasInputMade = true
 				P2time = P2timeTillNextInput
 				P2usedMovement.append(_appendrightchar(character))
+				
 			elif "P".find(character) >= 0:
 				P2wasInputMade = true
 				P2time = P2timeTillNextInput
@@ -79,8 +80,6 @@ func _process(delta):
 	if(P2wasInputMade):
 		P2time -= delta
 		if(P2time < 0 || P2usedMovement.size() == 4 || P2usedAttack.size() == 4):
-			print(P2usedAttack)
-			print("hfdwuiaqhfaiu")
 			_send_combo_attempt(P2usedMovement.slice(P2usedMovement.size()-3, P2usedMovement.size()-1), P2usedAttack.slice(P2usedAttack.size()-3, P2usedAttack.size()-1)) 
 			
 			P2wasInputMade = false
@@ -100,6 +99,7 @@ func _process(delta):
 	
 func _send_combo_attempt(var moveattempt = [], var attackattempt = []):
 	var fullattempt = moveattempt + attackattempt
+	
 	if(fullattempt in P2specificMoveSetAnims[name]):
 		P2playerAnimTree.travel(P2specificMoveSetAnims[name][fullattempt])
 		
@@ -116,9 +116,9 @@ func _send_combo_attempt(var moveattempt = [], var attackattempt = []):
 	elif(attackattempt in P2generalMoveSetAnims):
 		P2playerAnimTree.travel(P2generalMoveSetAnims[attackattempt[0]])
 		
-	print(moveattempt)
-	print(attackattempt)
-	print(fullattempt)
+	#print(moveattempt)
+	#print(attackattempt)
+	#print(fullattempt)
 	
 	
 func _move_player(var moveDir):
@@ -142,5 +142,30 @@ func _face_player():
 	else:
 		P2moveDir = 0		
 	
+var damage = 10
+var kind_of_hit = 1
+var kind_of_block #vielleicht
+
+func _set_attack(dmg, koh):
+	damage = dmg
+	kind_of_hit = koh
+	
+func _hurt_other_player():
+	player1._get_hurt()
+	
+func _get_hurt():
+	if(_is_blocking()):
+		print("blocked")
+	else: 
+		print("sheit")
+		P2gameRef.HUDManager._reduce_health_from(false, damage)
+
+func _is_blocking():
+	if((P2moveDir == 1 and Input.is_action_pressed("p2_move_left") or 
+		P2moveDir == -1 and Input.is_action_pressed("p2_move_right")) and 
+		P2canMove):
+			return true
+	else: 
+		return false
 	
 	
